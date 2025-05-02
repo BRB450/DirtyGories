@@ -3,12 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dirtygories</title>
+  <title>Guttergories</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <h1>Dirtygories</h1>
-  <p class="tagline">Scattegories, but filthy. 😈</p>
+  <h1>Guttergories</h1>
+  <p class="tagline">A dirty twist on Scattergories. 😈</p>
+
+  <div class="rules">
+    <h2>How to Play</h2>
+    <ul>
+      <li>Click "Start Round" to generate a random letter and category list.</li>
+      <li>Each player must come up with answers that start with the given letter.</li>
+      <li>Each category must have a unique answer — duplicates are not allowed.</li>
+      <li>Answers should be as creative, funny, or dirty as possible (within your group's comfort zone).</li>
+      <li>Players vote on whether answers are acceptable.</li>
+      <li>You can't start a new game while a round is running. Click "Stop Timer" first.</li>
+    </ul>
+  </div>
 
   <div class="controls">
     <label>Number of Categories:
@@ -18,6 +30,7 @@
       <input type="number" id="timeLimit" value="60" min="10" max="300">
     </label>
     <button id="newGame">Start Round</button>
+    <button id="stopGame">Stop Timer</button>
     <button id="rerollLetter">Reroll Letter</button>
   </div>
 
@@ -30,4 +43,3 @@
   <script src="script.js"></script>
 </body>
 </html>
-
