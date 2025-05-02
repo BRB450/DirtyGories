@@ -4,7 +4,98 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Guttergories</title>
-  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      background-color: #111;
+      color: #eee;
+      padding: 20px;
+      margin: 0;
+    }
+
+    h1 {
+      margin-bottom: 0;
+    }
+
+    .tagline {
+      font-style: italic;
+      margin-top: 5px;
+      margin-bottom: 20px;
+    }
+
+    details.rules {
+      background: #222;
+      padding: 15px;
+      border-radius: 8px;
+      max-width: 700px;
+      margin: 0 auto 20px auto;
+      text-align: left;
+      border: 1px solid #333;
+    }
+
+    details.rules summary {
+      cursor: pointer;
+      font-size: 18px;
+      margin-bottom: 10px;
+      color: #fff;
+      outline: none;
+    }
+
+    details.rules ul {
+      padding-left: 20px;
+      margin-top: 10px;
+    }
+
+    .controls {
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 5px;
+      cursor: pointer;
+      background-color: #333;
+      color: #eee;
+      border: none;
+      border-radius: 4px;
+    }
+
+    button:hover {
+      background-color: #444;
+    }
+
+    input {
+      padding: 5px;
+      margin: 0 10px;
+      font-size: 14px;
+      width: 60px;
+      text-align: center;
+      border: none;
+      border-radius: 4px;
+    }
+
+    .game {
+      margin-top: 20px;
+    }
+
+    #categoryList {
+      list-style: none;
+      padding: 0;
+    }
+
+    #categoryList li {
+      margin: 10px 0;
+      font-size: 18px;
+      background: #222;
+      padding: 10px;
+      border-radius: 6px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  </style>
 </head>
 <body>
   <h1>Guttergories</h1>
@@ -48,7 +139,74 @@
     <ul id="categoryList"></ul>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const categories = Array.from({ length: 500 }, (_, i) => `Funny Dirty Category ${i + 1}`);
+
+    const letterSpan = document.getElementById("letter");
+    const categoryList = document.getElementById("categoryList");
+    const timerSpan = document.getElementById("timer");
+    const newGameBtn = document.getElementById("newGame");
+    const stopGameBtn = document.getElementById("stopGame");
+    const rerollLetterBtn = document.getElementById("rerollLetter");
+
+    let currentTimer = null;
+
+    function getRandomLetter() {
+      return letters[Math.floor(Math.random() * letters.length)];
+    }
+
+    function getRandomCategories(count) {
+      return [...categories].sort(() => 0.5 - Math.random()).slice(0, count);
+    }
+
+    function updateLetter() {
+      const randomLetter = getRandomLetter();
+      letterSpan.textContent = randomLetter;
+    }
+
+    function startGame() {
+      if (currentTimer !== null) {
+        alert("You must stop the current round before starting a new one.");
+        return;
+      }
+
+      const categoryCount = parseInt(document.getElementById("categoryCount").value, 10);
+      const timeLimit = parseInt(document.getElementById("timeLimit").value, 10);
+
+      updateLetter();
+
+      const selectedCategories = getRandomCategories(categoryCount);
+      categoryList.innerHTML = "";
+      selectedCategories.forEach(cat => {
+        const li = document.createElement("li");
+        li.textContent = cat;
+        categoryList.appendChild(li);
+      });
+
+      let timeLeft = timeLimit;
+      timerSpan.textContent = timeLeft;
+      currentTimer = setInterval(() => {
+        timeLeft--;
+        timerSpan.textContent = timeLeft;
+        if (timeLeft <= 0) {
+          clearInterval(currentTimer);
+          currentTimer = null;
+        }
+      }, 1000);
+    }
+
+    function stopGame() {
+      if (currentTimer !== null) {
+        clearInterval(currentTimer);
+        currentTimer = null;
+        timerSpan.textContent = "0";
+      }
+    }
+
+    newGameBtn.addEventListener("click", startGame);
+    stopGameBtn.addEventListener("click", stopGame);
+    rerollLetterBtn.addEventListener("click", updateLetter);
+  </script>
 </body>
 </html>
-
