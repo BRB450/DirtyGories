@@ -16,7 +16,7 @@
       <li><strong>The Letter:</strong> A random letter is chosen each round. All answers must begin with that letter. Ignore articles like “The,” “A,” or “An.”</li>
       <li><strong>The Categories:</strong> Everyone uses the same list. One answer per category, starting with the round’s letter.</li>
       <li><strong>The Timer:</strong> You must finish your answers before the timer runs out. No changes after time ends.</li>
-      <li><strong>Scoring:</strong>
+      <li><strong>Scoring (manual):</strong>
         <ul>
           <li>🟢 Unique answer: <strong>10 points</strong></li>
           <li>🟡 Matching answer: <strong>5 points</strong></li>
@@ -26,4 +26,29 @@
         </ul>
       </li>
       <li><strong>Voting:</strong> If an answer is disputed, the group votes. Majority rules.</li>
-      <li><strong>Fair
+      <li><strong>Fair Play:</strong> No Googling or help allowed (unless your group agrees otherwise).</li>
+    </ul>
+  </details>
+
+  <div class="controls">
+    <label>Number of Categories:
+      <input type="number" id="categoryCount" value="10" min="1" max="100">
+    </label>
+    <label>Time Limit (seconds):
+      <input type="number" id="timeLimit" value="60" min="10" max="300">
+    </label>
+    <button id="newGame">Start Round</button>
+    <button id="stopGame">Stop Timer</button>
+    <button id="rerollLetter">Reroll Letter</button>
+  </div>
+
+  <div class="game">
+    <h2>Letter: <span id="letter">?</span></h2>
+    <h3>Time: <span id="timer">60</span> seconds</h3>
+    <ul id="categoryList"></ul>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
