@@ -17,6 +17,19 @@ h1 {
   margin-bottom: 20px;
 }
 
+.rules {
+  max-width: 600px;
+  margin: 0 auto 20px auto;
+  background: #222;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: left;
+}
+
+.rules h2 {
+  text-align: center;
+}
+
 .controls {
   margin-bottom: 20px;
 }
