@@ -4,27 +4,44 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Guttergories</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
+    :root {
+      --bg-color: #ffffff;
+      --text-color: #000000;
+      --accent-color: #ff69b4;
+      --button-bg: #000000;
+      --button-text: #ffffff;
+      --box-shadow: rgba(255, 0, 100, 0.5);
+    }
+
+    body.dark {
+      --bg-color: #0d0d0d;
+      --text-color: #ffffff;
+      --accent-color: #ff4081;
+      --button-bg: #ffffff;
+      --button-text: #000000;
+      --box-shadow: rgba(255, 105, 180, 0.9);
+      background-image: radial-gradient(circle at center, #1a1a1a, #000);
     }
 
     body {
       font-family: 'Helvetica Neue', sans-serif;
-      background-color: #fff;
-      color: #000;
+      background-color: var(--bg-color);
+      color: var(--text-color);
       display: flex;
       flex-direction: column;
       align-items: center;
       margin: 0;
       padding: 20px;
+      transition: background-color 0.3s, color 0.3s;
     }
 
     h1 {
       font-family: 'Bangers', cursive;
       font-size: 3rem;
       margin: 10px;
-      text-shadow: 2px 2px #ff69b4;
+      text-shadow: 2px 2px var(--accent-color);
     }
 
     .tagline {
@@ -36,12 +53,13 @@
     .letter-box {
       font-size: 10rem;
       font-weight: bold;
-      border: 4px solid black;
+      border: 4px solid var(--text-color);
       padding: 40px;
       margin: 20px 0;
       border-radius: 12px;
-      box-shadow: 0 0 20px rgba(255, 0, 100, 0.5);
-      transition: transform 0.3s ease-in-out;
+      box-shadow: 0 0 30px var(--box-shadow);
+      background-color: var(--bg-color);
+      transition: box-shadow 0.3s, background-color 0.3s;
     }
 
     .timer {
@@ -69,18 +87,19 @@
     }
 
     .controls button {
-      background-color: #000;
-      color: #fff;
+      background-color: var(--button-bg);
+      color: var(--button-text);
       border: none;
       padding: 10px 15px;
       border-radius: 5px;
       cursor: pointer;
       font-size: 1rem;
-      transition: background-color 0.3s ease;
+      transition: background-color 0.3s, color 0.3s;
     }
 
     .controls button:hover {
-      background-color: #ff4081;
+      background-color: var(--accent-color);
+      color: #fff;
     }
 
     #categoryList {
@@ -122,10 +141,16 @@
       cursor: pointer;
     }
 
-    @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
-</style>
+    .mode-toggle {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 0.9rem;
+    }
+  </style>
 </head>
 <body>
+  <button class="mode-toggle" onclick="toggleMode()">🌙 Toggle After Dark</button>
   <div class="timer">⏱️ <span id="timer">60</span>s</div>
   <h1>Guttergories</h1>
   <p class="tagline">A dirty twist on Scattergories. 😈</p>
@@ -166,192 +191,76 @@
   </details>
 
   <script>
+    function toggleMode() {
+      document.body.classList.toggle("dark");
+    }
+
     const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     const categories = [
-  "Something sticky",
-  "A bad pickup line",
-  "What you'd find in a stripper's purse",
-  "Sexy Halloween costume",
-  "Things you shouldn't yell during sex",
-  "What not to say during a first kiss",
-  "Inappropriate birthday gift",
-  "Things that smell questionable",
-  "A sexy food",
-  "Rejected adult film title",
-  "Dirty nickname for a friend",
-  "Weirdest sex toy idea",
-  "Strange place to get a tattoo",
-  "Most embarrassing body part",
-  "Something squeaky",
-  "What your grandma shouldn't see",
-  "Something you can moan",
-  "Awkward after-sex sentence",
-  "An item in your 'naughty drawer'",
-  "Something you hide from parents",
-  "Most awkward thing to lick",
-  "Things overheard in a motel",
-  "What you'd never say to a teacher",
-  "Silly safe word",
-  "What you'd say during a lap dance",
-  "Most inappropriate emoji",
-  "A terrible Tinder bio line",
-  "Something a dominatrix uses",
-  "Slang for body parts",
-  "What your dog saw",
-  "A sex position gone wrong",
-  "Strange roleplay idea",
-  "Weirdest pet name for a partner",
-  "What not to scream during yoga",
-  "Something wet",
-  "Something slippery",
-  "Weirdest thing you've Googled",
-  "An adult party game",
-  "Something you'd find in a bachelor pad",
-  "A forbidden fantasy",
-  "What not to text your boss",
-  "Dirty sounding fruit",
-  "Cringiest sext",
-  "Sexy sound effect",
-  "A noisy bedroom item",
-  "Something awkward in a backpack",
-  "What you'd regret tweeting",
-  "Worst possible safe word",
-  "An adult store aisle name",
-  "What you whisper at the wrong time",
-  "Things that vibrate",
-  "Funny strip club name",
-  "Terrible pet name",
-  "Something oddly arousing",
-  "A weird kink",
-  "Things that tingle",
-  "What not to say during cuddling",
-  "Sexual innuendo in a kid’s movie",
-  "What you'd say during a colonoscopy",
-  "A shameful dream",
-  "Inappropriate bumper sticker",
-  "A weird fetish",
-  "Something you whisper into a foot",
-  "Items in a disaster date kit",
-  "Weird things to do with whipped cream",
-  "How not to use a cucumber",
-  "Sexy name for a sandwich",
-  "Things that make you say oof",
-  "Unexpectedly erotic object",
-  "A roleplay outfit gone wrong",
-  "Most awkward moan",
-  "Pick-up line that ends in jail",
-  "Name of a failed dating app",
-  "Weird thing to put in your mouth",
-  "Embarrassing text to your mom",
-  "A suspicious stain",
-  "Creepy thing to say while winking",
-  "Adult toy with a twist",
-  "Things you yell in bed",
-  "Things you regret whispering",
-  "Worst place for a hickey",
-  "Gross lube flavor",
-  "Dirty joke that crossed the line",
-  "Worst place for glitter",
-  "Body part to never pierce",
-  "Strangest place to find rope",
-  "Funny reason to be grounded at 30",
-  "What a ghost moans during sex",
-  "Freaky fact about yourself",
-  "Unsexy thing to wear in bed",
-  "Weirdest text from your ex",
-  "Most embarrassing search history",
-  "Something soft but inappropriate",
-  "Secret you’d never admit drunk",
-  "Worst thing to moan",
-  "Inappropriate tattoo idea",
-  "Adult Mad Libs topic",
-  "Awkward sounds during intimacy",
-  "Name of a freaky group chat",
-  "How to ruin a first kiss",
-  "Things you shouldn't microwave",
-  "A place to scream safely",
-  "What your neighbors hear",
-  "Weird thing under your bed",
-  "Weirdest place to get naked",
-  "Things that smell sexy (but shouldn’t)",
-  "Most awkward walk of shame story",
-  "Unusual turn-on",
-  "Excuse for being naked in public",
-  "A ‘safe word’ that’s too fun to say",
-  "Terrible erotic novel title",
-  "Unintentionally sexy job title",
-  "Dirtiest sounding clean word",
-  "Items banned in bedroom",
-  "Things you whisper to pasta",
-  "Romantic gift that screams run",
-  "An awkward massage moment",
-  "Worst time to get aroused",
-  "Most inappropriate kitchen utensil",
-  "Sexy thing to do with socks",
-  "Things that make you sweat... in a bad way",
-  "Things you say to a toe",
-  "Worst compliment ever",
-  "Secret thing you named",
-  "Horrible thing to discover mid-date",
-  "A questionable birthday wish",
-  "What you should never lick",
-  "Something hidden in a bra",
-  "A haunted sex toy",
-  "A place to moan that’s not the bedroom",
-  "What not to say in a strip club",
-  "Things that shouldn’t be sticky",
-  "Smutty storybook title",
-  "A fantasy gone horribly wrong",
-  "A weird roleplay gone right",
-  "Awkward thing to find at a friend’s house",
-  "An adult spell from Hogwarts",
-  "Something to never scream at church",
-  "Worst way to end a dirty talk session",
-  "An R-rated board game idea",
-  "Unusual objects that vibrate",
-  "What you wouldn’t admit on a lie detector",
-  "Dirtiest thing you’ve ever said accidentally",
-  "Gross dessert topping",
-  "Cursed lube brand name",
-  "Terrible sex tape title",
-  "Things that squeal",
-  "A sexy insult",
-  "The name of your ex’s kink",
-  "A bad fanfiction trope",
-  "Strangest place to get a rash",
-  "Naughty place to hide candy",
-  "What not to do in a hot tub",
-  "Things you say while stretching",
-  "Most arousing farm animal (don’t ask why)",
-  "A scent you regret smelling",
-  "Banned episode title",
-  "Weirdest wedding night surprise",
-  "Kink that’s also a workout",
-  "Weirdest thing whispered in public",
-  "Awkward reason to use crutches",
-  "Things you can’t explain to a child",
-  "Worst way to spice things up",
-  "Things that feel good but shouldn’t",
-  "A smell that ruins the mood",
-  "A forbidden object in a hotel room",
-  "What you scream when caught in the act",
-  "Most romantic thing involving noodles",
-  "A weird shower thought",
-  "A text that gets you ghosted",
-  "A thing you'd never put on OnlyFans",
-  "Weird flex during a hookup",
-  "Something you regret buying on Amazon",
-  "Worst pickup line at a funeral",
-  "An emoji that says too much",
-  "How to ruin a bubble bath",
-  "Things you shouldn't film",
-  "Dirty thing to yell at the gym",
-  "Most cursed pet name",
-  "Object with questionable shape",
-  "Most inappropriate song lyric",
-  "What not to whisper to a baby",
-  "A playlist name you hide from friends"
-];
+      "Something sticky", "A bad pickup line", "What you'd find in a stripper's purse", "Sexy Halloween costume",
+      "Things you shouldn't yell during sex", "What not to say during a first kiss", "Inappropriate birthday gift",
+      "Things that smell questionable", "A sexy food", "Rejected adult film title", "Dirty nickname for a friend",
+      "Weirdest sex toy idea", "Strange place to get a tattoo", "Most embarrassing body part", "Something squeaky",
+      "What your grandma shouldn't see", "Something you can moan", "Awkward after-sex sentence",
+      "An item in your 'naughty drawer'", "Something you hide from parents", "Most awkward thing to lick",
+      "Things overheard in a motel", "What you'd never say to a teacher", "Silly safe word",
+      "What you'd say during a lap dance", "Most inappropriate emoji", "A terrible Tinder bio line",
+      "Something a dominatrix uses", "Slang for body parts", "What your dog saw", "A sex position gone wrong",
+      "Strange roleplay idea", "Weirdest pet name for a partner", "What not to scream during yoga", "Something wet",
+      "Something slippery", "Weirdest thing you've Googled", "An adult party game",
+      "Something you'd find in a bachelor pad", "A forbidden fantasy", "What not to text your boss",
+      "Dirty sounding fruit", "Cringiest sext", "Sexy sound effect", "A noisy bedroom item",
+      "Something awkward in a backpack", "What you'd regret tweeting", "Worst possible safe word",
+      "An adult store aisle name", "What you whisper at the wrong time", "Things that vibrate",
+      "Funny strip club name", "Terrible pet name", "Something oddly arousing", "A weird kink", "Things that tingle",
+      "What not to say during cuddling", "Sexual innuendo in a kid’s movie", "What you'd say during a colonoscopy",
+      "A shameful dream", "Inappropriate bumper sticker", "A weird fetish",
+      "Something you whisper into a foot", "Items in a disaster date kit", "Weird things to do with whipped cream",
+      "How not to use a cucumber", "Sexy name for a sandwich", "Things that make you say oof",
+      "Unexpectedly erotic object", "A roleplay outfit gone wrong", "Most awkward moan",
+      "Pick-up line that ends in jail", "Name of a failed dating app", "Weird thing to put in your mouth",
+      "Embarrassing text to your mom", "A suspicious stain", "Creepy thing to say while winking",
+      "Adult toy with a twist", "Things you yell in bed", "Things you regret whispering",
+      "Worst place for a hickey", "Gross lube flavor", "Dirty joke that crossed the line", "Worst place for glitter",
+      "Body part to never pierce", "Strangest place to find rope", "Funny reason to be grounded at 30",
+      "What a ghost moans during sex", "Freaky fact about yourself", "Unsexy thing to wear in bed",
+      "Weirdest text from your ex", "Most embarrassing search history", "Something soft but inappropriate",
+      "Secret you’d never admit drunk", "Worst thing to moan", "Inappropriate tattoo idea",
+      "Adult Mad Libs topic", "Awkward sounds during intimacy", "Name of a freaky group chat",
+      "How to ruin a first kiss", "Things you shouldn't microwave", "A place to scream safely",
+      "What your neighbors hear", "Weird thing under your bed", "Weirdest place to get naked",
+      "Things that smell sexy (but shouldn’t)", "Most awkward walk of shame story", "Unusual turn-on",
+      "Excuse for being naked in public", "A ‘safe word’ that’s too fun to say", "Terrible erotic novel title",
+      "Unintentionally sexy job title", "Dirtiest sounding clean word", "Items banned in bedroom",
+      "Things you whisper to pasta", "Romantic gift that screams run", "An awkward massage moment",
+      "Worst time to get aroused", "Most inappropriate kitchen utensil", "Sexy thing to do with socks",
+      "Things that make you sweat... in a bad way", "Things you say to a toe", "Worst compliment ever",
+      "Secret thing you named", "Horrible thing to discover mid-date", "A questionable birthday wish",
+      "What you should never lick", "Something hidden in a bra", "A haunted sex toy",
+      "A place to moan that’s not the bedroom", "What not to say in a strip club",
+      "Things that shouldn’t be sticky", "Smutty storybook title", "A fantasy gone horribly wrong",
+      "A weird roleplay gone right", "Awkward thing to find at a friend’s house",
+      "An adult spell from Hogwarts", "Something to never scream at church",
+      "Worst way to end a dirty talk session", "An R-rated board game idea",
+      "Unusual objects that vibrate", "What you wouldn’t admit on a lie detector",
+      "Dirtiest thing you’ve ever said accidentally", "Gross dessert topping", "Cursed lube brand name",
+      "Terrible sex tape title", "Things that squeal", "A sexy insult", "The name of your ex’s kink",
+      "A bad fanfiction trope", "Strangest place to get a rash", "Naughty place to hide candy",
+      "What not to do in a hot tub", "Things you say while stretching",
+      "Most arousing farm animal (don’t ask why)", "A scent you regret smelling", "Banned episode title",
+      "Weirdest wedding night surprise", "Kink that’s also a workout",
+      "Weirdest thing whispered in public", "Awkward reason to use crutches",
+      "Things you can’t explain to a child", "Worst way to spice things up",
+      "Things that feel good but shouldn’t", "A smell that ruins the mood",
+      "A forbidden object in a hotel room", "What you scream when caught in the act",
+      "Most romantic thing involving noodles", "A weird shower thought",
+      "A text that gets you ghosted", "A thing you'd never put on OnlyFans",
+      "Weird flex during a hookup", "Something you regret buying on Amazon",
+      "Worst pickup line at a funeral", "An emoji that says too much", "How to ruin a bubble bath",
+      "Things you shouldn't film", "Dirty thing to yell at the gym", "Most cursed pet name",
+      "Object with questionable shape", "Most inappropriate song lyric",
+      "What not to whisper to a baby", "A playlist name you hide from friends"
+    ];
 
     const letterSpan = document.getElementById("letter");
     const categoryList = document.getElementById("categoryList");
@@ -418,8 +327,6 @@
     newGameBtn.addEventListener("click", startGame);
     stopGameBtn.addEventListener("click", stopGame);
     rerollLetterBtn.addEventListener("click", updateLetter);
-  </script>
+</script>
 </body>
 </html>
-
-
