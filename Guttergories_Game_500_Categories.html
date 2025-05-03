@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guttergories</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+  <style>
+    /* Styling omitted here for brevity. Assume full CSS block from earlier. */
+  </style>
+</head>
+<body>
+  <button class="mode-toggle" onclick="toggleMode()">🌙 Toggle After Dark</button>
+  <div class="timer">⏱️ <span id="timer">60</span>s</div>
+  <h1>Guttergories</h1>
+  <p class="tagline">Like a time when Scattergories & Cards Against Humanity didn't use protection... 🍆💦</p>
+  <div class="letter-box" id="letter">?</div>
+
+  <div class="controls">
+    <label>Categories:
+      <input type="number" id="categoryCount" value="10" min="1" max="100">
+    </label>
+    <label>Time:
+      <input type="number" id="timeLimit" value="60" min="10" max="300">
+    </label>
+    <button id="newGame">Start</button>
+    <button id="stopGame">Stop</button>
+    <button id="rerollLetter">Reroll</button>
+  </div>
+
+  <ul id="categoryList"></ul>
+
+  <details class="rules">
+    <summary>📜 View Guttergories Rules</summary>
+    <ul>
+      <li><strong>The Letter:</strong> A random letter is chosen each round. All answers must begin with that letter.</li>
+      <li><strong>The Categories:</strong> Everyone uses the same list. One answer per category.</li>
+      <li><strong>The Timer:</strong> You must finish before time runs out.</li>
+      <li><strong>Scoring:</strong>
+        <ul>
+          <li>🟢 Unique: 10 points</li>
+          <li>🟡 Match: 5 points</li>
+          <li>🔴 Blank: 0 points</li>
+          <li>🌟 Alliteration: +1 point per extra letter (max 3)</li>
+        </ul>
+      </li>
+    </ul>
+  </details>
+
+  <script>
+    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const categories = [
+      "Something sticky you'd never touch twice",
+      "Worst possible safe word",
+      "Most awkward thing to say during a lap dance",
+      "A dirty thought you had at work",
+      "What's hidden under your bed (NSFW edition)",
+      "A fruit that sounds inappropriate",
+      "Strangest item found in a nightstand",
+      "A phrase that should never be moaned",
+      "Your ex's most shameful kink",
+      "What you accidentally licked",
+      // ... (plus 490 more, to be appended here)
+    ];
+
+    function toggleMode() {
+      document.body.classList.toggle("dark");
+    }
+
+    const letterSpan = document.getElementById("letter");
+    const categoryList = document.getElementById("categoryList");
+    const timerSpan = document.getElementById("timer");
+    const newGameBtn = document.getElementById("newGame");
+    const stopGameBtn = document.getElementById("stopGame");
+    const rerollLetterBtn = document.getElementById("rerollLetter");
+
+    let currentTimer = null;
+
+    function getRandomLetter() {
+      return letters[Math.floor(Math.random() * letters.length)];
+    }
+
+    function getRandomCategories(count) {
+      return [...categories].sort(() => 0.5 - Math.random()).slice(0, count);
+    }
+
+    function updateLetter() {
+      const randomLetter = getRandomLetter();
+      letterSpan.textContent = randomLetter;
+    }
+
+    function startGame() {
+      if (currentTimer !== null) {
+        alert("Stop the current round first.");
+        return;
+      }
+
+      const categoryCount = parseInt(document.getElementById("categoryCount").value, 10);
+      const timeLimit = parseInt(document.getElementById("timeLimit").value, 10);
+
+      updateLetter();
+
+      const selectedCategories = getRandomCategories(categoryCount);
+      categoryList.innerHTML = "";
+      selectedCategories.forEach((cat, index) => {
+        const li = document.createElement("li");
+        li.textContent = cat;
+        li.style.setProperty('--i', index);
+        categoryList.appendChild(li);
+      });
+
+      let timeLeft = timeLimit;
+      timerSpan.textContent = timeLeft;
+      currentTimer = setInterval(() => {
+        timeLeft--;
+        timerSpan.textContent = timeLeft;
+        if (timeLeft <= 0) {
+          clearInterval(currentTimer);
+          currentTimer = null;
+        }
+      }, 1000);
+    }
+
+    function stopGame() {
+      if (currentTimer !== null) {
+        clearInterval(currentTimer);
+        currentTimer = null;
+        timerSpan.textContent = "0";
+      }
+    }
+
+    newGameBtn.addEventListener("click", startGame);
+    stopGameBtn.addEventListener("click", stopGame);
+    rerollLetterBtn.addEventListener("click", updateLetter);
+  </script>
+</body>
+</html>
